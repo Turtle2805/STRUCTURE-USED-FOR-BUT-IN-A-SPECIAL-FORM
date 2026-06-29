@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chuyên Đề Đảo Ngữ - Ms Lê Hằng English</title>
+    <!-- Nhúng phông chữ Quicksand và Nunito tròn trịa, chuẩn phong cách Duolingo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Quicksand:wght@500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #8854C0, #FDCB6E, #00C9A7, #E84393);
+            --correct-color: #00D26A;
+            --wrong-color: #FF4757;
+            --text-main: #2D3436;
+            --card-bg: rgba(255, 255, 255, 0.96);
+        }
+
+        body {
+            font-family: 'Quicksand', 'Nunito', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: var(--text-main);
+            background: var(--primary-gradient);
+            background-size: 400% 400%;
+            animation: loangMauNenChuyenDong 20s ease infinite;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        @keyframes loangMauNenChuyenDong {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Họa tiết hoạt hình SVG vui nhộn chuyển động lơ lửng độc lập phía trên nền loang */
+        .pattern-overlay-layer {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.18;
+            mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 160 160'><g fill='%23FFFFFF'><path d='M20,20 L26,32 L38,34 L29,42 L32,54 L20,47 L8,54 L11,42 L2,34 L14,32 Z'/><circle cx='120' cy='40' r='10'/><path d='M40,110 C40,98 60,92 80,104 C100,92 120,98 120,110 C120,122 40,122 40,110 Z' opacity='0.6'/><path d='M130,120 Q142,102 154,120 T166,120' stroke='%23FFFFFF' stroke-width='3' fill='none'/></g></svg>");
+            animation: movingBackgroundPattern 30s linear infinite;
+        }
+
+        @keyframes movingBackgroundPattern {
+            from { background-position: 0 0; }
+            to { background-position: 300px 600px; }
+        }
+
+        .container {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        header {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.94);
+            padding: 6px 16px;
+            border-radius: 12px;
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.08);
+            margin-bottom: 15px;
+            border: 2px solid #8854C0;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 0.95rem;
+            color: #8854C0;
+            margin: 0;
+            font-weight: 900;
+        }
+
+        .important-notice-box {
+            background: #FFF9E6;
+            border: 4px dashed #FDCB6E;
+            border-radius: 20px;
+            padding: 18px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 0 rgba(253, 203, 110, 0.3);
+            text-align: center;
+        }
+
+        .notice-title {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: #D35400;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .notice-content {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #2D3436;
+            font-weight: 700;
+        }
+
+        .notice-footer {
+            font-style: italic;
+            color: #8854C0;
+            margin-top: 8px;
+            font-weight: 900;
+            display: block;
+        }
+
+        /* KHUNG HIỂN THỊ SỔ TAY LÝ THUYẾT VĂN BẢN SẠCH (KHÔNG LỖI HIỂN THỊ) */
+        .theory-handbook-card {
+            background: #FFFFFF;
+            border-radius: 24px;
+            padding: 22px;
+            margin-bottom: 25px;
+            border: 3px solid #8854C0;
+            box-shadow: 0 8px 0 rgba(136, 84, 192, 0.2);
+        }
+
+        .theory-title {
+            font-size: 1.35rem;
+            font-weight: 900;
+            color: #8854C0;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 15px;
+            border-bottom: 3px double #8854C0;
+            padding-bottom: 6px;
+        }
+
+        .theory-heading-main {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: #8854C0;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            border-left: 5px solid #8854C0;
+            padding-left: 10px;
+        }
+
+        .theory-section-title {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: #E84393;
+            margin-top: 15px;
+            margin-bottom: 8px;
+        }
+
+        .theory-block {
+            background: #F1F2F6;
+            border-radius: 14px;
+            padding: 14px 18px;
+            margin-bottom: 15px;
+            font-family: inherit;
+            font-weight: 700;
+            line-height: 1.6;
+        }
+
+        .structure-line {
+            color: #2D3436;
+            font-size: 1.05rem;
+            margin-bottom: 6px;
+        }
+
+        .structure-highlight {
+            color: #E84393;
+            background: #FFE8F2;
+            padding: 2px 8px;
+            border-radius: 6px;
+        }
+
+        .theory-example {
+            font-style: italic;
+            color: #57606F;
+            padding-left: 10px;
+            border-left: 3px solid #00C9A7;
+            margin: 6px 0;
+        }
+
+        /* THIẾT KẾ CARD CÂU HỎI TRẮC NGHIỆM */
+        .quiz-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 0 rgba(0, 0, 0, 0.06);
+            border: 3px solid #FFF;
+            position: relative;
+        }
+
+        .exam-tag-callout {
+            background: #74B9FF;
+            color: white;
+            font-weight: 900;
+            padding: 5px 12px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 10px;
+            box-shadow: 0 3px 0 #0984E3;
+        }
+
+        .question-header {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .question-number {
+            background: #8854C0;
+            color: #FFF;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            margin-right: 12px;
+            font-size: 1rem;
+            box-shadow: 0 4px 0 #6c3da3;
+            flex-shrink: 0;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            line-height: 1.5;
+            color: var(--text-main);
+            margin-top: 4px;
+        }
+
+        .choices-grid {
+            display: flex;
+            flex-direction: column;
+            margin-top: 15px;
+        }
+
+        .choice-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            background: #FFF;
+            border: 3px solid #E2E8F0;
+            border-radius: 18px;
+            padding: 12px 18px;
+            margin-bottom: 10px;
+            font-size: 1.02rem;
+            font-weight: 700;
+            text-align: left;
+            cursor: pointer;
+            font-family: inherit;
+            color: var(--text-main);
+            box-shadow: 0 6px 0 #E2E8F0;
+            transition: all 0.1s ease;
+        }
+
+        .choice-btn:hover:not(:disabled) {
+            transform: scale(1.015) translateY(-2px);
+            border-color: #B2BEC3;
+            box-shadow: 0 8px 0 #B2BEC3;
+        }
+
+        .choice-btn:active:not(:disabled) {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #B2BEC3;
+        }
+
+        .choice-prefix {
+            background: #F1F5F9;
+            border-radius: 10px;
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            margin-right: 12px;
+            color: #64748B;
+            flex-shrink: 0;
+        }
+
+        /* Trạng thái 3D nổi bật: Đúng Xanh Lá - Sai Đỏ Cam */
+        .choice-btn.correct-state {
+            background-color: #E6FBF1 !important;
+            border-color: var(--correct-color) !important;
+            box-shadow: 0 6px 0 #00A955 !important;
+            color: #006633 !important;
+        }
+
+        .choice-btn.correct-state .choice-prefix {
+            background-color: var(--correct-color) !important;
+            color: white !important;
+        }
+
+        .choice-btn.wrong-state {
+            background-color: #FFEBEB !important;
+            border-color: var(--wrong-color) !important;
+            box-shadow: 0 6px 0 #D63031 !important;
+            color: #99222A !important;
+        }
+
+        .choice-btn.wrong-state .choice-prefix {
+            background-color: var(--wrong-color) !important;
+            color: white !important;
+        }
+
+        .shake-animation {
+            animation: shake Effect 0.4s ease-in-out;
+        }
+
+        @keyframes shakeEffect {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        /* KHUNG GIẢI THÍCH CHI TIẾT HIỂN THỊ TỨC THỜI */
+        .explanation-box {
+            margin-top: 18px;
+            background: #F8F9FA;
+            border-radius: 18px;
+            padding: 18px;
+            border-left: 6px solid #8854C0;
+            display: none;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .explanation-title {
+            font-weight: 900;
+            color: #8854C0;
+            font-size: 1.05rem;
+            margin-bottom: 10px;
+        }
+
+        .explanation-step {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #4A5568;
+        }
+
+        .step-heading {
+            font-weight: 900;
+            color: #2D3748;
+            margin-bottom: 2px;
+        }
+
+        /* NÚT NỘP BÀI TỔNG KẾT */
+        .footer-action-wrapper {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .submit-exam-btn {
+            background: #00D26A;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 16px 60px;
+            font-size: 1.35rem;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 8px 0 #00A955, 0 12px 25px rgba(0,0,0,0.15);
+            font-family: inherit;
+            transition: all 0.15s;
+        }
+
+        .submit-exam-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 11px 0 #00A955, 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .submit-exam-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 4px 0 #00A955;
+        }
+
+        /* POPUP MODAL KẾT QUẢ TỔNG HỢP VỚI LỜI NHẬN XÉT ĐỘNG VIÊN */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.25s ease;
+        }
+
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal-body-card {
+            background: white;
+            border-radius: 28px;
+            max-width: 500px;
+            width: 90%;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+            border: 4px solid #8854C0;
+            transform: scale(0.8);
+            transition: all 0.25s ease;
+        }
+
+        .modal-overlay.active .modal-body-card {
+            transform: scale(1);
+        }
+
+        .modal-header-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #8854C0;
+            margin-bottom: 12px;
+        }
+
+        .modal-score-badge {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #00D26A;
+            margin: 15px 0;
+        }
+
+        .modal-comment-text {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #2D3436;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        .modal-reload-btn {
+            background: #8854C0;
+            color: white;
+            border: none;
+            border-radius: 18px;
+            padding: 12px 40px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #6c3da3;
+        }
+
+        #canvas-confetti-layer {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="pattern-overlay-layer"></div>
+    <canvas id="canvas-confetti-layer"></canvas>
+
+    <div class="container">
+        <header>
+            <h1>Giáo viên tạo: Ms Lê Hằng English</h1>
+        </header>
+
+        <!-- Khung nhắc nhở cực kỳ quan trọng -->
+        <div class="important-notice-box">
+            <span class="notice-title">⚠️ LỜI NHẮC CỰC KỲ QUAN TRỌNG ⚠️</span>
+            <span class="notice-content">
+                Chỉ có đọc kỹ giải thích ngay sau mỗi câu, sau đó ghi lại từ vựng/cấu trúc mới vào vở để học thì mới thực sự giỏi lên.<br>
+                Làm cho xong mà không đọc giải thích hay đọc qua loa không ghi chép thì chỉ tốn thời gian vô ích!
+            </span>
+            <span class="notice-footer">* Kéo tới đâu, làm tới đó! *</span>
+        </div>
+
+        <!-- SỔ TAY LÝ THUYẾT GỐC CHUẨN XÁC NỘI DUNG BAN ĐẦU - ĐÃ SỬA LỖI HIỂN THỊ -->
+        <div class="theory-handbook-card">
+            <div class="theory-title">📚 SỔ TAY LÝ THUYẾT CHUYÊN ĐỀ ĐẢO NGỮ</div>
+            
+            <div class="theory-heading-main">CÔNG THỨC ĐẢO NGỮ SO THAT // SUCH ... THAT</div>
+            
+            <div class="theory-section-title">ĐẢO NGỮ SO ... THAT</div>
+            
+            <div class="theory-block">
+                <div style="color: #8854C0; margin-bottom: 4px; font-weight: 900;">Trường hợp 1:</div>
+                <div class="structure-line">Cấu trúc gốc: <b>S1 + be + so + adj + that + S2 + Verb</b></div>
+                <div class="structure-line">👉 Đảo ngữ: <span class="structure-highlight">So + Adj + be + S1 + that + S2 + Verb + Obj</span></div>
+                <div class="theory-example">EX: The sea was so tough that the children could not go swimming.</div>
+                <div class="theory-example" style="color: #8854C0; font-weight: 900;">→ So...</div>
+            </div>
+
+            <div class="theory-block">
+                <div style="color: #8854C0; margin-bottom: 4px; font-weight: 900;">Trường hợp 2:</div>
+                <div class="structure-line">Cấu trúc gốc: <b>S1 + Verb + so + adv + that + S2 + Verb</b></div>
+                <div class="structure-line">👉 Đảo ngữ: <span class="structure-highlight">So + Adv + trợ động từ + S1 + Verb + that + S2 + Verb + Obj</span></div>
+                <div class="theory-example">EX: The children ran so quickly that no one can catch them.</div>
+                <div class="theory-example" style="color: #8854C0; font-weight: 900;">→ So...</div>
+            </div>
+
+            <div class="theory-section-title">ĐẢO NGỮ SUCH THAT</div>
+            <div class="theory-block">
+                <div class="structure-line">Cấu trúc gốc: <b>S1 + be + such + (a/an) + adj + N + that + S2 + Verb</b></div>
+                <div class="structure-line" style="margin-top: 8px;">👉 Cách 1: <span class="structure-highlight" style="background: #E0F7FA; color: #00796B;">Such + be + (a/an) + N + that + S + V + O</span></div>
+                <div class="structure-line">👉 Cách 2: <span class="structure-highlight" style="background: #E0F7FA; color: #00796B;">Such + (a/an) + N + be + S + that + S + V + O</span></div>
+                <div class="theory-example" style="margin-top: 8px;">EX: It is such a good book that I have read twice.</div>
+                <div class="theory-example" style="color: #8854C0; font-weight: 900;">→ Such</div>
+                <div class="theory-example" style="color: #8854C0; font-weight: 900;">→ Such</div>
+            </div>
+
+            <div class="theory-heading-main" style="margin-top: 25px; border-left-color: #E84393;">CÔNG THỨC BỔ SUNG TRONG ĐỀ THI</div>
+            <div class="theory-block" style="background: #FFF0F5;">
+                <div class="structure-line">👉 Công thức 1: <span class="structure-highlight" style="background: #FFE0E6; color: #C2185B;">Adj/adv + as/though + S + V + O, S + V + O</span></div>
+                <div class="structure-line">👉 Công thức 2: <span class="structure-highlight" style="background: #FFE0E6; color: #C2185B;">However + adj/adv + S + V + O, S + V + O</span></div>
+                <div class="structure-line">👉 Công thức 3: <span class="structure-highlight" style="background: #FFE0E6; color: #C2185B;">No matter how + adj/adv + S + V + O, S + V + O</span></div>
+                <div class="structure-line">👉 Công thức 4: <span class="structure-highlight" style="background: #FFE0E6; color: #C2185B;">No matter what/when/why/who/whose/where /if...</span></div>
+            </div>
+        </div>
+
+        <!-- Vùng hiển thị danh sách câu hỏi trắc nghiệm tương tác -->
+        <div id="quiz-dynamic-render-target"></div>
+
+        <div class="footer-action-wrapper">
+            <button class="submit-exam-btn" onclick="processExamGrading()">🎉 NỘP BÀI THI 🎉</button>
+        </div>
+    </div>
+
+    <!-- Popup Modal kết quả kiểm tra tổng kết -->
+    <div class="modal-overlay" id="result-summary-popup">
+        <div class="modal-body-card">
+            <div class="modal-header-title">🏆 KẾT QUẢ KIỂM TRA 🏆</div>
+            <div class="modal-score-badge" id="score-counter-slot">0/0</div>
+            <div class="modal-comment-text" id="teacher-feedback-slot">Lời khuyên...</div>
+            <button class="modal-reload-btn" onclick="resetAndRestartQuiz()">THỬ SỨC LẠI</button>
+        </div>
+    </div>
+
+    <script>
+        // BỘ DỮ LIỆU ĐỀ BÀI HOÀN CHỈNH 100% QUY ĐỔI SANG DẠNG TRẮC NGHIỆM ABCD CAO CẤP
+        const questionsDatabase = [
+            {
+                id: 1,
+                tag: "Chuyên Nguyễn Huệ - Hà Nội",
+                question: "It's sad, but unemployment is unlikely to go down this year. Sad.",
+                display_question: "Chọn câu viết lại đúng nhất bắt đầu bằng tính từ <b>\"Sad\"</b> cho câu sau:<br><b>\"It's sad, but unemployment is unlikely to go down this year.\"</b>",
+                choices: [
+                    { text: "Sad as unemployment is, it is unlikely to go down this year.", key: "A" },
+                    { text: "Sad though is unemployment, it is unlikely to go down this year.", key: "B" },
+                    { text: "Sad however unemployment is, it is unlikely to go down this year.", key: "C" },
+                    { text: "Sad as unemployment is, but it is unlikely to go down this year.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Thật buồn, nhưng tình trạng thất nghiệp khó có thể giảm xuống trong năm nay.'",
+                    step2: "Phân tích cấu trúc 4 đáp án:<br>A. Sad as unemployment is, ... (Đúng chuẩn cấu trúc Nhượng bộ đảo ngữ với As)<br>B. Sad though is unemployment, ... (Sai cấu trúc vì đảo động từ lên trước chủ ngữ là sai)<br>C. Sad however unemployment is, ... (Sai vì tính từ không đứng trước However như vậy)<br>D. Sad as unemployment is, but... (Sai vì cấu trúc nhượng bộ không dùng liên từ 'but' nối giữa hai vế)",
+                    step3: "Tại sao chọn A? Áp dụng chính xác công thức nhượng bộ nâng cao: <b>Adj/Adv + as/though + S + V, S + V</b>. Ta đưa tính từ 'Sad' lên đầu, đi kèm liên từ 'as', sau đó là chủ ngữ 'unemployment' và động từ 'is'.",
+                    step4: "Tại sao các đáp án còn lại SAI? B sai trật tự từ; C sai cách dùng phối hợp từ; D phạm lỗi dùng thừa từ liên kết phối hợp phản logic ('but')."
+                }
+            },
+            {
+                id: 2,
+                tag: "Chuyên anh tỉnh Quảng Bình",
+                question: "All the children will receive a prize, whatever their score in the competition. No matter what their..",
+                display_question: "Chọn câu viết lại đúng nhất bắt đầu bằng cụm từ <b>\"No matter what their\"</b> cho câu sau:<br><b>\"All the children will receive a prize, whatever their score in the competition.\"</b>",
+                choices: [
+                    { text: "No matter what their score in the competition is, all the children will receive a prize.", key: "A" },
+                    { text: "No matter what their score in the competition, all the children will receive a prize.", key: "B" },
+                    { text: "No matter how their score in the competition is, all the children will receive a prize.", key: "C" },
+                    { text: "No matter what is their score in the competition, all the children will receive a prize.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Tất cả trẻ em sẽ nhận được giải thưởng, bất kể điểm số của chúng trong cuộc thi là bao nhiêu.'",
+                    step2: "Phân tích cấu trúc 4 đáp án:<br>A. No matter what their score in the competition is, ... (Đúng chuẩn ngữ pháp mệnh đề No matter what)<br>B. ... competition, ... (Sai vì mệnh đề phụ thiếu động từ 'is' làm vị ngữ cuối câu)<br>C. No matter how... (Sai vì câu gốc dùng 'whatever' để chỉ sự việc gì, nên phải quy đổi tương đương thành 'what')<br>D. No matter what is their score... (Sai vì đây là mệnh đề danh từ phụ thuộc, không được đảo ngữ trợ động từ lên trước)",
+                    step3: "Tại sao chọn A? Công thức chuyển đổi tương đương giữa Whatever và No matter: <b>Whatever + N + (S + V) = No matter what + N + S + V</b>. Cụm danh từ ở đây là 'their score in the competition', và động từ to be được thêm vào cuối mệnh đề để hoàn chỉnh ngữ pháp là 'is'.",
+                    step4: "Tại sao các đáp án còn lại SAI? B thiếu động từ chính; C dùng sai từ nghi vấn chỉ tính chất mức độ ('how'); D dính lỗi đảo ngữ cấu trúc mệnh đề danh từ phụ속."
+                }
+            },
+            {
+                id: 3,
+                tag: "Chuyên anh Hồ Chí Minh 2018",
+                question: "Although she didn't agree with the management's decision, Chloe was forced to accept it. (CHOICE) Much",
+                display_question: "Chọn câu viết lại đúng nhất sử dụng từ khóa gợi ý <b>CHOICE</b> và bắt đầu bằng trạng từ <b>\"Much\"</b>:<br><b>\"Although she didn't agree with the management's decision, Chloe was forced to accept it.\"</b>",
+                choices: [
+                    { text: "Much as she disagreed with the management's decision, Chloe had no choice but to accept it.", key: "A" },
+                    { text: "Much though she didn't agree with the management's decision, Chloe was no choice to accept it.", key: "B" },
+                    { text: "Much as she disagreed with the management's decision, Chloe was forced to choice it.", key: "C" },
+                    { text: "Much as she didn't agree with the management's decision, Chloe didn't have choices to accept it.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Mặc dù cô ấy không đồng ý với quyết định của ban quản lý, Chloe vẫn buộc phải chấp nhận nó.'",
+                    step2: "Phân tích cấu trúc 4 đáp án:<br>A. Much as she disagreed..., Chloe had no choice but to accept it. (Đúng chuẩn cấu trúc đảo ngữ nhượng bộ và cụm idiom cố định)<br>B. ...was no choice... (Sai cấu trúc diễn đạt và từ loại ngữ pháp)<br>C. ...forced to choice it. (Sai vì 'choice' là danh từ, không đứng sau 'to' làm động từ nguyên mẫu được)<br>D. ...didn't have choices... (Sai cấu trúc cụm từ biểu đạt mục tiêu truyền tải)",
+                    step3: "Tại sao chọn A? Câu kết hợp hai cấu trúc nâng cao Chuyên Anh: 1. Đảo ngữ trạng từ với As nhấn mạnh mức độ: <b>Much as + S + V</b> (Mặc dù rất nhiều...). 2. Cấu trúc bắt buộc với từ khóa CHOICE: <b>have no choice but + to-V</b> (không có sự lựa chọn nào khác ngoài việc phải làm gì).",
+                    step4: "Tại sao các đáp án còn lại SAI? B, C và D đều vi phạm lỗi từ loại của từ 'choice' (danh từ) và sử dụng sai các cụm idiom diễn đạt tương đương của đề bài gốc."
+                }
+            },
+            {
+                id: 4,
+                tag: "Chuyên anh Hồ Chí Minh 2015",
+                question: "You have to accept the truth although it is hurtful (terms) Hurtful",
+                display_question: "Chọn câu viết lại câu đúng nhất kết hợp từ khóa gợi ý <b>(terms)</b> và bắt đầu bằng <b>\"Hurtful\"</b>:<br><b>\"You have to accept the truth although it is hurtful\"</b>",
+                choices: [
+                    { text: "Hurtful as the truth is, you have to accept it in terms of truth.", key: "A" },
+                    { text: "Hurtful though the truth is, you have to come to terms with it.", key: "B" },
+                    { text: "Hurtful as is the truth, you have to keep terms with it.", key: "C" },
+                    { text: "Hurtful though it is the truth, you must bring terms to it.", key: "D" }
+                ],
+                correct: "B",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Bạn phải chấp nhận sự thật mặc dù nó rất đau lòng.'",
+                    step2: "Phân tích cấu trúc 4 đáp án:<br>A. ...in terms of truth. (Sai cụm thành ngữ diễn đạt tương đương nghĩa gốc)<br>B. Hurtful though the truth is, you have to come to terms with it. (Đúng cấu trúc đảo ngữ Nhượng bộ và cụm Idiom cố định)<br>C. Hurtful as is the truth... (Sai trật tự đảo ngữ cấu trúc As/Though)<br>D. ...bring terms to it. (Sai hoàn toàn cụm từ kết hợp cấu trúc bản ngữ)",
+                    step3: "Tại sao chọn B? Câu áp dụng cấu trúc nhượng bộ đảo tính từ lên đầu: <b>Hurtful though the truth is</b>. Đồng thời, kết hợp xuất sắc cụm thành ngữ (Idiom) bắt buộc với từ gợi ý 'terms': <b>come to terms with something</b> nghĩa là chấp nhận một sự thật đau lòng hoặc hoàn cảnh khó khăn.",
+                    step4: "Tại sao các đáp án còn lại SAI? Các phương án A, C, D đều tạo ra các cụm từ bịa đặt, sai ngữ pháp hoặc sử dụng sai cụm idiom 'come to terms with'."
+                }
+            },
+            {
+                id: 5,
+                tag: "Chuyên anh Hồ Chí Minh 2014",
+                question: "The young girl stopped working though the salary was very high. (GAVE) No matter how.",
+                display_question: "Chọn câu viết lại câu đúng nhất kết hợp cụm động từ chứa <b>GAVE</b> và bắt đầu bằng <b>\"No matter how\"</b>:<br><b>\"The young girl stopped working though the salary was very high.\"</b>",
+                choices: [
+                    { text: "No matter how high the salary was, the young girl gave up her job.", key: "A" },
+                    { text: "No matter how high was the salary, the young girl gave away her job.", key: "B" },
+                    { text: "No matter how the salary was very high, the young girl gave in her job.", key: "C" },
+                    { text: "No matter how high salary it was, the young girl gave out working.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Cô gái trẻ đã ngừng làm việc mặc dù mức lương rất cao.'",
+                    step2: "Phân tích cấu trúc 4 đáp án:<br>A. No matter how high the salary was, ... (Đúng chuẩn ngữ pháp No matter how + Adj + S + V và phrasal verb)<br>B. ...how high was the salary... (Sai vì mệnh đề sau No matter how không đảo ngữ động từ lên trước)<br>C. ...gave in... (Sai phrasal verb vì 'give in' là đầu hàng/nhượng bộ, không phải từ bỏ việc)<br>D. ...gave out... (Sai phrasal verb vì 'give out' là cạn kiệt/phân phát)",
+                    step3: "Tại sao chọn A? Áp dụng cấu trúc nhượng bộ: <b>No matter how + Adj + S + V</b> tạo thành vế đầu 'No matter how high the salary was'. Vế sau dùng phrasal verb chứa từ khóa 'GAVE': <b>give up something/V-ing</b> (từ bỏ việc gì/bỏ việc) thay thế hoàn hảo cho hành động 'stopped working'.",
+                    step4: "Tại sao các đáp án còn lại SAI? B sai trật tự từ đảo ngữ; C lặp từ thừa 'very high' và dùng sai phrasal verb; D sai cấu trúc biểu đạt kết nối từ vựng."
+                }
+            },
+            {
+                id: 6,
+                tag: "Đề thi học sinh giỏi 30/4 lớp 10",
+                question: "They remain close friends despite having had many arguments. (FALL) Frequently as",
+                display_question: "Chọn câu viết lại câu đúng nhất bắt đầu bằng cụm từ <b>\"Frequently as\"</b> kết hợp động từ gợi ý <b>FALL</b>:<br><b>\"They remain close friends despite having had many arguments.\"</b>",
+                choices: [
+                    { text: "Frequently as they argue, they never fall out.", key: "A" },
+                    { text: "Frequently as they have arguments, they frequently fall out.", key: "B" },
+                    { text: "Frequently as they argue, but they never fall down.", key: "C" },
+                    { text: "Frequently as they have had arguments, they never fall over.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Họ vẫn là những người bạn thân thiết bất chấp việc đã có nhiều cuộc tranh cãi.'",
+                    step2: "Phân tích cấu trúc 4 đáp án:<br>A. Frequently as they argue, they never fall out. (Đúng chuẩn cấu trúc đảo ngữ trạng từ và phrasal verb tương đương nghĩa bóng)<br>B. ...they frequently fall out. (Sai hoàn toàn nghĩa logic vì câu gốc bảo họ vẫn là bạn thân)<br>C. ...but they never fall down. (Sai vì dùng thừa từ 'but' và phrasal verb 'fall down' là ngã xuống đất)<br>D. ...fall over. (Sai phrasal verb vì 'fall over' là vấp ngã ngã lộn nhào)",
+                    step3: "Tại sao chọn A? Vận dụng cấu trúc đảo ngữ trạng từ: <b>Adv + as + S + V</b> tạo thành 'Frequently as they argue' (Dù họ tranh cãi thường xuyên...). Kết hợp cụm động từ chứa từ gốc gợi ý 'FALL': <b>fall out (with someone)</b> nghĩa là tranh cãi, rạn nứt mối quan hệ nghỉ chơi với nhau. Việc họ vẫn là bạn thân ('remain close friends') tương đương với việc họ hầu như không bao giờ nghỉ chơi ('they never fall out').",
+                    step4: "Tại sao các đáp án còn lại SAI? B làm ngược dòng logic ý nghĩa cốt lõi của câu; C và D dùng sai bản chất phrasal verb của từ 'fall' trong văn cảnh giao tiếp bằng hữu."
+                }
+            },
+            {
+                id: 7,
+                tag: "Đề thi chuyên Đại Học Ngoại Ngữ Hà Nội",
+                question: "Although he was tired, he agreed to play tennis. Tired...",
+                display_question: "Chọn câu viết lại câu đúng nhất bắt đầu bằng tính từ <b>\"Tired\"</b> cho câu sau:<br><b>\"Although he was tired, he agreed to play tennis.\"</b>",
+                choices: [
+                    { text: "Tired as he was, he agreed to play tennis.", key: "A" },
+                    { text: "Tired though was he, he agreed to play tennis.", key: "B" },
+                    { text: "Tired however he was, he agreed to play tennis.", key: "C" },
+                    { text: "Tired as he did, he agreed to play tennis.", key: "D" }
+                ],
+                correct: "A",
+                explanation: {
+                    step1: "Dịch nghĩa câu gốc: 'Mặc dù anh ấy mệt mỏi, anh ấy vẫn đồng ý chơi tennis.'",
+                    step2: "Phân tích cấu trúc 4 đáp án:<br>A. Tired as he was, ... (Đúng chuẩn công thức đảo ngữ nhượng bộ tính từ)<br>B. Tired though was he... (Sai vì đảo động từ vị ngữ lên trước chủ ngữ là cấu trúc sai)<br>C. Tired however he was... (Sai cấu trúc ngữ pháp sử dụng kết nối từ của however)<br>D. Tired as he did... (Sai vì câu gốc dùng động từ to be 'was' bổ nghĩa tính từ, không dùng trợ động từ hành động 'did')",
+                    step3: "Tại sao chọn A? Áp dụng chính xác công thức nhượng bộ nâng cao: <b>Adj + as + S + V, S + V</b>. Đưa tính từ 'Tired' lên đầu câu, đi kèm liên từ 'as', theo sau là chủ ngữ 'he' và động từ 'was' được giữ nguyên trật tự từ ngữ.",
+                    step4: "Tại sao các đáp án còn lại SAI? B sai vị trí động từ; C kết hợp từ loại phi ngữ pháp; D mượn sai trợ động từ hệ thống ngữ pháp tiếng Anh."
+                }
+            }
+        ];
+
+        let answersLogTracker = {};
+
+        // ENGINE TỰ ĐỘNG SINH ÂM THANH NỘI BỘ QUA WEB AUDIO API KHÔNG CẦN LINK NGOÀI
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function emitCorrectChimeSound() {
+            try {
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, now); // C5
+                osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
+                osc.frequency.setValueAtTime(783.99, now + 0.16); // G5
+                osc.frequency.setValueAtTime(1046.50, now + 0.24); // C6
+                gain.gain.setValueAtTime(0, now);
+                gain.gain.linearRampToValueAtTime(0.25, now + 0.05);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(now); osc.stop(now + 0.5);
+            } catch(err) { console.log(err); }
+        }
+
+        function emitWrongBuzzSound() {
+            try {
+                const now = audioCtx.currentTime;
+                const frequencies = [392.00, 349.23, 261.63]; // Chuỗi âm luyến hạ bậc "Téo teo tèo" vui nhộn
+                frequencies.forEach((freq, idx) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(freq, now + (idx * 0.12));
+                    gain.gain.setValueAtTime(0, now + (idx * 0.12));
+                    gain.gain.linearRampToValueAtTime(0.2, now + (idx * 0.12) + 0.02);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + (idx * 0.12) + 0.14);
+                    osc.connect(gain); gain.connect(audioCtx.destination);
+                    osc.start(now + (idx * 0.12)); osc.stop(now + (idx * 0.12) + 0.14);
+                });
+            } catch(err) { console.log(err); }
+        }
+
+        // HIỆU ỨNG PHÁO GIẤY RỰC RỠ CANVAS KHI CHỌN ĐÚNG
+        function launchConfettiCelebration() {
+            const canvas = document.getElementById('canvas-confetti-layer');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            
+            let particles = [];
+            const paletteColors = ['#FFC107', '#FF5722', '#E91E63', '#9C27B0', '#00C9A7', '#00D26A', '#8854C0'];
+            
+            for (let i = 0; i < 80; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    radius: Math.random() * 5 + 4,
+                    density: Math.random() * canvas.height,
+                    color: paletteColors[Math.floor(Math.random() * paletteColors.length)],
+                    tilt: Math.random() * 10 - 5,
+                    tiltIncremental: Math.random() * 0.05 + 0.02,
+                    angle: 0
+                });
+            }
+            
+            function animateConfettiFrame() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let continueAnimation = false;
+                particles.forEach((p) => {
+                    p.angle += p.tiltIncremental;
+                    p.y += (Math.cos(p.density) + 3 + p.radius / 2) / 1.8;
+                    p.x += Math.sin(p.angle);
+                    
+                    if (p.y <= canvas.height) continueAnimation = true;
+                    
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color;
+                    ctx.fill();
+                });
+                if (continueAnimation) requestAnimationFrame(animateConfettiFrame);
+            }
+            animateConfettiFrame();
+        }
+
+        // THUẬT TOÁN XÁO TRỘN ĐÁP ÁN (FISHER-YATES SHUFFLE CHUẨN XÁC)
+        function shuffleArrayChoices(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                const temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+            return array;
+        }
+
+        // KẾT XUẤT TOÀN BỘ CÁC CARD CÂU HỎI LÊN GIAO DIỆN CHẠY
+        function renderInteractiveQuiz() {
+            const containerZone = document.getElementById('quiz-dynamic-render-target');
+            containerZone.innerHTML = '';
+            
+            questionsDatabase.forEach((q, idx) => {
+                const cardNode = document.createElement('div');
+                cardNode.className = 'quiz-card';
+                cardNode.id = `card-wrapper-id-${q.id}`;
+                
+                let shuffledChoices = [...q.choices];
+                shuffleArrayChoices(shuffledChoices);
+                
+                let choicesHtmlContent = '';
+                shuffledChoices.forEach(choice => {
+                    choicesHtmlContent += `
+                        <button class="choice-btn" id="btn-choice-item-${q.id}-${choice.key}" onclick="evaluateUserChoice(${q.id}, '${choice.key}', '${q.correct}')">
+                            <span class="choice-prefix">${choice.key}</span>
+                            <span class="choice-body-text">${choice.text}</span>
+                        </button>
+                    `;
+                });
+
+                cardNode.innerHTML = `
+                    <div class="exam-tag-callout">🏛️ ${q.tag}</div>
+                    <div class="question-header">
+                        <div class="question-number">${idx + 1}</div>
+                        <div class="question-text">${q.display_question}</div>
+                    </div>
+                    <div class="choices-grid" id="choices-grid-box-id-${q.id}">
+                        ${choicesHtmlContent}
+                    </div>
+                    
+                    <!-- Khung giải thích siêu chi tiết bật mở ngay khi làm câu hỏi -->
+                    <div class="explanation-box" id="explanation-box-view-id-${q.id}">
+                        <div class="explanation-title">💡 PHẦN GIẢI THÍCH CHI TIẾT CỦA MS LÊ HẰNG:</div>
+                        <div class="explanation-step">
+                            <div class="step-heading">🔹 Bước 1: Dịch câu hỏi sang tiếng Việt</div>
+                            <div>${q.explanation.step1}</div>
+                        </div>
+                        <div class="explanation-step">
+                            <div class="step-heading">🔹 Bước 2: Liệt kê và dịch nghĩa cả 4 đáp án</div>
+                            <div>${q.explanation.step2}</div>
+                        </div>
+                        <div class="explanation-step">
+                            <div class="step-heading">🔹 Bước 3: Tại sao đáp án đúng là đúng?</div>
+                            <div style="font-weight: 700; color: #00A955;">${q.explanation.step3}</div>
+                        </div>
+                        <div class="explanation-step">
+                            <div class="step-heading">🔹 Bước 4: Tại sao các đáp án còn lại SAI?</div>
+                            <div>${q.explanation.step4}</div>
+                        </div>
+                    </div>
+                `;
+                containerZone.appendChild(cardNode);
+            });
+        }
+
+        // XỬ LÝ CHẤM ĐIỂM TỨC THÌ KHI BẤM CHỌN
+        function evaluateUserChoice(questionId, chosenKey, correctKey) {
+            if (answersLogTracker[questionId] !== undefined) return;
+            
+            answersLogTracker[questionId] = chosenKey;
+            const targetBtnNode = document.getElementById(`btn-choice-item-${questionId}-${chosenKey}`);
+            const correctBtnNode = document.getElementById(`btn-choice-item-${questionId}-${correctKey}`);
+            const parentCardNode = document.getElementById(`card-wrapper-id-${questionId}`);
+            
+            if (chosenKey === correctKey) {
+                targetBtnNode.classList.add('correct-state');
+                emitCorrectChimeSound();
+                launchConfettiCelebration();
+            } else {
+                targetBtnNode.classList.add('wrong-state');
+                if (correctBtnNode) correctBtnNode.classList.add('correct-state');
+                parentCardNode.classList.add('shake-animation');
+                emitWrongBuzzSound();
+                setTimeout(() => parentCardNode.classList.remove('shake-animation'), 450);
+            }
+
+            const childrenButtons = document.getElementById(`choices-grid-box-id-${questionId}`).getElementsByClassName('choice-btn');
+            for (let btn of childrenButtons) { btn.disabled = true; }
+
+            // Tự động bật mở khung giải thích chi tiết ngay lập tức dưới câu hỏi
+            document.getElementById(`explanation-box-view-id-${questionId}`).style.display = 'block';
+        }
+
+        // TÍNH ĐIỂM SỐ KHI BẤM NỘP BÀI CUỐI TRANG
+        function processExamGrading() {
+            let correctCount = 0;
+            const totalQuestionsCount = questionsDatabase.length;
+            
+            questionsDatabase.forEach(q => {
+                if (answersLogTracker[q.id] === q.correct) {
+                    correctCount++;
+                }
+            });
+
+            const rawSuccessPercentage = (correctCount / totalQuestionsCount) * 100;
+            const scoreDisplaySlot = document.getElementById('score-counter-slot');
+            const commentDisplaySlot = document.getElementById('teacher-feedback-slot');
+
+            scoreDisplaySlot.innerText = `${correctCount} / ${totalQuestionsCount}`;
+
+            if (rawSuccessPercentage < 50) {
+                commentDisplaySlot.innerText = "Điểm lần này chưa cao lắm, con cố gắng đọc kỹ giải thích đáp án và làm lại nha. Cô tin con sẽ làm tốt hơn ở lần sau! 💕";
+            } else if (rawSuccessPercentage >= 60 && rawSuccessPercentage <= 80) {
+                commentDisplaySlot.innerText = "Con đã có tiến bộ khá ổn rồi, con cố gắng đọc kỹ giải thích đáp án và làm lại nha. Cô tin con sẽ làm tốt hơn ở lần sau! 🌟";
+            } else {
+                commentDisplaySlot.innerText = "Làm tốt lắm, con cố gắng ring điểm 10 ở lần sau nha! 🎉💎";
+            }
+
+            document.getElementById('result-summary-popup').classList.add('active');
+        }
+
+        function resetAndRestartQuiz() {
+            document.getElementById('result-summary-popup').classList.remove('active');
+            answersLogTracker = {};
+            renderInteractiveQuiz();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.onload = () => {
+            renderInteractiveQuiz();
+        };
+    </script>
+</body>
+</html>
